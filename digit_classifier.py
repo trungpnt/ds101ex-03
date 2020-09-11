@@ -17,14 +17,14 @@ class DigitClassifier:
         densed_layer_3 = Dense(128, activation='relu')(densed_layer_2)
         densed_layer_4 = Dense(64,activation='relu')(densed_layer_3)
         densed_layer_5 = Dense(32,activation = 'relu')(densed_layer_4)
-        output_layer = Dense(10, activation='softmax')(densed_layer_5)
+        densed_layer_6 = Dense(16,activation='relu')(densed_layer_5)
+        output_layer = Dense(10, activation='softmax')(densed_layer_6)
         self.model = Model(input_layer,output_layer)
         print(self.model.summary())
 
         loss = SparseCategoricalCrossentropy()
-        #optimizer = Adam(learning_rate=1e-3)
-        optimizer = SGD()
-        self.model.compile(loss = loss, optimizer = optimizer, metrics = ["accuracy"])
+        optimizer = Adam(learning_rate=1e-3)
+        self.model.compile(loss = loss, optimizer = optimizer, metrics = [SparseCategoricalAccuracy()])
 
     def load_model(self):
         self.model = load_model('models/trung.hdf5')
