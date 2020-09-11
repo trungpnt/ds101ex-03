@@ -1,7 +1,7 @@
 from tensorflow.keras.layers import Dense,Input
 from tensorflow.keras.models import Model
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam,SGD
 from tensorflow.keras.metrics import SparseCategoricalAccuracy
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.models import load_model
@@ -22,8 +22,9 @@ class DigitClassifier:
         print(self.model.summary())
 
         loss = SparseCategoricalCrossentropy()
-        optimizer = Adam(learning_rate=1e-3)
-        self.model.compile(loss = loss, optimizer = optimizer, metrics = [SparseCategoricalAccuracy()])
+        #optimizer = Adam(learning_rate=1e-3)
+        optimizer = SGD()
+        self.model.compile(loss = loss, optimizer = optimizer, metrics = ["accuracy"])
 
     def load_model(self):
         self.model = load_model('models/trung.hdf5')
